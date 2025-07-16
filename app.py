@@ -18,6 +18,10 @@ if 'username' not in st.session_state:
     st.session_state.username = ""
 if 'theme' not in st.session_state:
     st.session_state.theme = "light"
+if 'show_profile_dropdown' not in st.session_state:
+    st.session_state.show_profile_dropdown = False
+if 'profile_tab' not in st.session_state:
+    st.session_state.profile_tab = "profile"
 
 def load_css_and_theme():
     if os.path.exists('static/custom.css'):
