@@ -1,0 +1,72 @@
+.profile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.profile-icon {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #f0f2f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #4a4a4a;
+}
+
+.profile-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    padding: 2rem;
+    z-index: 999;
+}
+
+.profile-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.close-button {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.profile-menu-item {
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.profile-menu-item:hover {
+    background-color: #f0f2f6;
+}
+
+.profile-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+/* Hide Streamlit's default menu button */
+#MainMenu {
+    visibility: hidden;
+}
+
+/* Adjust the main content area to accommodate the profile icon */
+.main {
+    margin-right: 60px;
+}
