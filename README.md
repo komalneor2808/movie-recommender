@@ -2,20 +2,15 @@
 This is personalized movie recommendation system that is built using Streamlit. It includes user authentication, profile management menu, and collaborative filtering to suggest movies according to user preferences. It also has filters to make the results more specific. I have used collaborative filtering to find users with similar taste in movie, and suggests movies liked by those users. 
 
 
-
-
-----------------------------------------------------------------------------------------------
 ## Features
 =: User authentication with both sign in and sign up options
 =: Profile management menu for updating user info , password and preferences
-    =: In prefrences, user can choose between light and dark theme 
+=: In prefrences, user can choose between light and dark theme 
 =: Personalized movie recommendations using collaborative filtering
 =: Filters and search bar to make recommendations more specific
 =: bar graphs to show basic dataset insights 
 
 
-
-----------------------------------------------------------------------------------------------
 ## Files in this project
 =: `app.py` - Main application file 
 =: `auth.py` - File to handle user login, signup, password 
@@ -28,13 +23,11 @@ This is personalized movie recommendation system that is built using Streamlit. 
 
 
 
-----------------------------------------------------------------------------------------------
 ## Live Demo
-[link to be added]
+https://movie-recommender-67grbyc7jy6vvda5k62yph.streamlit.app/
 
 
 
-----------------------------------------------------------------------------------------------
 ## Requirements
 =: Python 3.7+
 =: Streamlit
@@ -45,7 +38,6 @@ This is personalized movie recommendation system that is built using Streamlit. 
  
 
 
-----------------------------------------------------------------------------------------------
 ## Installation of project
 1. Clone the repository:
     - git clone https://github.com/komalneor2808/movie-recommender.git
@@ -66,7 +58,6 @@ This is personalized movie recommendation system that is built using Streamlit. 
   
 
 
-----------------------------------------------------------------------------------------------
 ## Project Structure
 =: app.py                 # Main application
 =: auth.py                # Authentication logic
@@ -83,7 +74,6 @@ This is personalized movie recommendation system that is built using Streamlit. 
 
 
 
-----------------------------------------------------------------------------------------------
 ## Data Analysis
 =: MovieLens 100k dataset is used for movies which has:
     =: 100,000 ratings from 943 users on 1682 movies
@@ -95,17 +85,12 @@ This is personalized movie recommendation system that is built using Streamlit. 
 
 
 
-----------------------------------------------------------------------------------------------
 ## Usage
 1. Sign up by filling the neccessary details
-     =: or login with already existing profile of username: komal and password K@4321
 2. Log in to the system
 3. Get movie recommendations based on your preferences using the button(middle of the screen)
 4. Use filetrs on the left of the screen to make recomemndations more specific
 5. Edit your profile to update your info and movie interests
 5. Use the search feature to find movies by title or genre
 
-
-
-----------------------------------------------------------------------------------------------
 
