@@ -1,115 +1,97 @@
-# 🎬 Movie Recommender System
+# Movie Recommender System
+This is personalized movie recommendation system that is built using Streamlit. It includes user authentication, profile management menu, and collaborative filtering to suggest movies according to user preferences. It also has filters to make the results more specific
 
-A personalized movie recommendation system built with Streamlit, featuring user authentication, profile management, and collaborative filtering.
 
-## ✨ Features
 
-- **🔐 User Authentication**: Secure login and signup system
-- **👤 Profile Management**: Edit user information and preferences
-- **🎨 Theme Support**: Light and dark mode themes
-- **🎯 Personalized Recommendations**: Get movie suggestions based on user preferences
-- **🔍 Movie Search**: Search and filter movies by title and genre
-- **📊 Dataset Insights**: View statistics and popular genres
+----------------------------------------------------------------------------------------------
+## Features
+=: User authentication with both sign in and sign up options
+=: Profile management menu for updating user info , password and preferences
+    =: In prefrences, user can choose between light and dark theme 
+=: Personalized movie recommendations using collaborative filtering
+=: Filters and search bar to make recommendations more specific
+=: bar graphs to show basic dataset insights 
 
-## 🚀 Live Demo
 
-[Deploy your app here - add your deployment URL]
 
-## 📋 Requirements
+----------------------------------------------------------------------------------------------
+## Live Demo
+[deployment link to be added]
 
-- Python 3.7+
-- Streamlit
-- Pandas
-- NumPy
-- Scikit-surprise
-- BCrypt
 
-## 🛠️ Installation
 
+----------------------------------------------------------------------------------------------
+## Requirements
+=: Python 3.7+
+=: Streamlit
+=: Pandas
+=: NumPy
+=: Scikit-surprise
+=: BCrypt
+ 
+
+
+----------------------------------------------------------------------------------------------
+## Installation of project
 1. Clone the repository:
-```bash
-git clone https://github.com/komalneor2808/movie-recommender.git
-cd movie-recommender
-```
+    - git clone https://github.com/komalneor2808/movie-recommender.git
+    - cd movie-recommender
 
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+2. Install the dependencies: pip install -r requirements.txt
+    - python -m venv venv
 
-3. Run the application:
-```bash
-streamlit run app.py
-```
+    - source venv/bin/activate     // On macOS/Linux
+    - venv\Scripts\activate        // On Windows
 
-4. Open your browser to `http://localhost:8501`
+    - pip install -r requirements.txt       //install from the given file
+    - pip install streamlit pandas numpy scikit-surprise bcrypt     //Or, intall individually
 
-## 📁 Project Structure
+3. To run the system: streamlit run app.py
 
-```
-├── app.py                    # Main Streamlit application
-├── auth.py                   # User authentication system
-├── profile_manager.py        # User profile management
-├── recommender.py            # Movie recommendation engine
-├── data_exploration.ipynb    # Jupyter notebook with data analysis
-├── requirements.txt          # Python dependencies
-├── users.db                 # SQLite user database
-├── data/                    # Movie dataset files
-│   ├── movies.csv
-│   ├── ratings.csv
-│   └── users.csv
-└── static/                  # CSS styling files
-    └── custom.css
-```
+4. In the brower, go to: http://localhost:8501
+  
 
-## 📊 Data Analysis
 
-The `data_exploration.ipynb` notebook contains comprehensive data analysis including:
-- **Week 1**: Data loading and initial exploration
-- **Week 2**: Statistical analysis and data quality checks
-- **Week 3**: Implementation of collaborative filtering recommendation algorithm
+----------------------------------------------------------------------------------------------
+## Project Structure
+=: app.py                 # Main application
+=: auth.py                # Authentication logic
+=: profile_manager.py     # User profile handling
+=: recommender.py         # Recommendation system logic
+=: data_exploration.ipynb # Jupyter notebook with data analysis
+=: requirements.txt       # Dependencies
+=: users.db               # Local user database
+=: data/                  # Movie dataset
+        =: movies.csv
+        =: ratings.csv
+=: static/                # CSS styling
+        =: custom.css
 
-Key findings:
-- Dataset contains 100,000 ratings from 943 users on 1,682 movies
-- Matrix sparsity of 93.7% indicates collaborative filtering challenges
-- Average rating is 3.53 with rating 4 being most common
-- Users rate between 20-737 movies (average: 106 per user)
 
-## 🎯 Usage
 
-1. **Sign Up**: Create a new account with username, email, and password
-2. **Login**: Access your personalized dashboard
-3. **Get Recommendations**: Select filters and get movie suggestions
-4. **Manage Profile**: Update your information and preferences
-5. **Search Movies**: Find specific movies by title or genre
+----------------------------------------------------------------------------------------------
+## Data Analysis
+=: MovieLens 100k dataset is used for movies which has:
+    =: 100,000 ratings from 943 users on 1682 movies
+    =: Sparsity of 93.7% 
+    =: Average rating of 3.53 and rating 4 is the most frequent one
+    =: Users rate between 20 and 737 movies 
+=: Link to the dataset: https://grouplens.org/datasets/movielens/100k/
+=: `data_exploration.ipynb` file explores all the data very well in its code. 
 
-## 🔧 Configuration
 
-The app uses the MovieLens dataset for recommendations. You can customize:
-- Minimum rating thresholds
-- Number of recommendations
-- Genre filters
-- User interface themes
 
-## 📊 Dataset
+----------------------------------------------------------------------------------------------
+## Usage
+1. Sign up by filling the neccessary details
+     =: or login with already existing profile of username: komal and password K@4321
+2. Log in to the system
+3. Get movie recommendations based on your preferences using the button(middle of the screen)
+4. Use filetrs on the left of the screen to make recomemndations more specific
+5. Edit your profile to update your info and movie interests
+5. Use the search feature to find movies by title or genre
 
-This project uses the MovieLens dataset containing:
-- 100,000 ratings
-- 1,682 movies
-- 943 users
-- 19 genres
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+----------------------------------------------------------------------------------------------
 
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 🙋‍♀️ Support
-
-If you encounter any issues or have questions, please open an issue on GitHub.
