@@ -47,19 +47,33 @@ streamlit run app.py
 ## 📁 Project Structure
 
 ```
-├── app.py                 # Main Streamlit application
-├── auth.py               # User authentication system
-├── profile_manager.py    # User profile management
-├── recommender.py        # Movie recommendation engine
-├── requirements.txt      # Python dependencies
-├── users.db             # SQLite user database
-├── data/                # Movie dataset files
+├── app.py                    # Main Streamlit application
+├── auth.py                   # User authentication system
+├── profile_manager.py        # User profile management
+├── recommender.py            # Movie recommendation engine
+├── data_exploration.ipynb    # Jupyter notebook with data analysis
+├── requirements.txt          # Python dependencies
+├── users.db                 # SQLite user database
+├── data/                    # Movie dataset files
 │   ├── movies.csv
 │   ├── ratings.csv
 │   └── users.csv
-└── static/              # CSS styling files
+└── static/                  # CSS styling files
     └── custom.css
 ```
+
+## 📊 Data Analysis
+
+The `data_exploration.ipynb` notebook contains comprehensive data analysis including:
+- **Week 1**: Data loading and initial exploration
+- **Week 2**: Statistical analysis and data quality checks
+- **Week 3**: Implementation of collaborative filtering recommendation algorithm
+
+Key findings:
+- Dataset contains 100,000 ratings from 943 users on 1,682 movies
+- Matrix sparsity of 93.7% indicates collaborative filtering challenges
+- Average rating is 3.53 with rating 4 being most common
+- Users rate between 20-737 movies (average: 106 per user)
 
 ## 🎯 Usage
 
