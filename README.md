@@ -1,97 +1,70 @@
-# Movie Recommender System
-This is personalized movie recommendation system that is built using Streamlit. It includes user authentication, profile management menu, and collaborative filtering to suggest movies according to user preferences. It also has filters to make the results more specific
+# Movie Recommendation System
 
+This is my school project for building a movie recommendation system. I used Python and Streamlit to make a web app that suggests movies to users based on what other similar users liked.
 
+## What it does
 
-----------------------------------------------------------------------------------------------
-## Features
-=: User authentication with both sign in and sign up options
-=: Profile management menu for updating user info , password and preferences
-    =: In prefrences, user can choose between light and dark theme 
-=: Personalized movie recommendations using collaborative filtering
-=: Filters and search bar to make recommendations more specific
-=: bar graphs to show basic dataset insights 
+- Users can sign up and login
+- Get personalized movie recommendations 
+- Search for movies by title
+- Change profile settings and password
+- Switch between light and dark themes
+- View movie statistics and popular genres
 
+## How the recommendation works
 
+I used collaborative filtering - basically the app finds users who liked similar movies as you, then suggests other movies those users also enjoyed. It's like asking friends with similar taste for movie recommendations!
 
-----------------------------------------------------------------------------------------------
-## Live Demo
-[deployment link to be added]
+## Files in this project
 
+- `app.py` - Main application file with all the UI
+- `auth.py` - Handles user login, signup, password stuff
+- `profile_manager.py` - Manages user profiles and settings
+- `recommender.py` - The recommendation algorithm 
+- `data_exploration.ipynb` - My data analysis work (3 weeks of progress)
+- `requirements.txt` - Python packages needed
+- `data/` - Movie dataset files from MovieLens
+- `static/custom.css` - Some basic styling to make it look nicer
 
+## How to run it
 
-----------------------------------------------------------------------------------------------
-## Requirements
-=: Python 3.7+
-=: Streamlit
-=: Pandas
-=: NumPy
-=: Scikit-surprise
-=: BCrypt
- 
+1. Install Python packages:
+```bash
+pip install -r requirements.txt
+```
 
+2. Run the app:
+```bash
+streamlit run app.py
+```
 
-----------------------------------------------------------------------------------------------
-## Installation of project
-1. Clone the repository:
-    - git clone https://github.com/komalneor2808/movie-recommender.git
-    - cd movie-recommender
+3. Open your browser to `http://localhost:8501`
 
-2. Install the dependencies: pip install -r requirements.txt
-    - python -m venv venv
+## Dataset info
 
-    - source venv/bin/activate     // On macOS/Linux
-    - venv\Scripts\activate        // On Windows
+I used the MovieLens 100K dataset which has:
+- 100,000 movie ratings
+- 1,682 movies  
+- 943 users
+- 19 different genres
 
-    - pip install -r requirements.txt       //install from the given file
-    - pip install streamlit pandas numpy scikit-surprise bcrypt     //Or, intall individually
+The data is pretty sparse (93.7% empty) which made the recommendation algorithm challenging but interesting to work with.
 
-3. To run the system: streamlit run app.py
+## What I learned
 
-4. In the brower, go to: http://localhost:8501
-  
+- How to build web apps with Streamlit
+- User authentication and database management
+- Collaborative filtering for recommendations
+- Data analysis and visualization
+- CSS styling for better UI
+- Git version control
 
+## Future improvements
 
-----------------------------------------------------------------------------------------------
-## Project Structure
-=: app.py                 # Main application
-=: auth.py                # Authentication logic
-=: profile_manager.py     # User profile handling
-=: recommender.py         # Recommendation system logic
-=: data_exploration.ipynb # Jupyter notebook with data analysis
-=: requirements.txt       # Dependencies
-=: users.db               # Local user database
-=: data/                  # Movie dataset
-        =: movies.csv
-        =: ratings.csv
-=: static/                # CSS styling
-        =: custom.css
+- Add more recommendation algorithms
+- Include movie posters and descriptions
+- Better mobile responsive design
+- Movie rating and review features
+- Social features like friend recommendations
 
-
-
-----------------------------------------------------------------------------------------------
-## Data Analysis
-=: MovieLens 100k dataset is used for movies which has:
-    =: 100,000 ratings from 943 users on 1682 movies
-    =: Sparsity of 93.7% 
-    =: Average rating of 3.53 and rating 4 is the most frequent one
-    =: Users rate between 20 and 737 movies 
-=: Link to the dataset: https://grouplens.org/datasets/movielens/100k/
-=: `data_exploration.ipynb` file explores all the data very well in its code. 
-
-
-
-----------------------------------------------------------------------------------------------
-## Usage
-1. Sign up by filling the neccessary details
-     =: or login with already existing profile of username: komal and password K@4321
-2. Log in to the system
-3. Get movie recommendations based on your preferences using the button(middle of the screen)
-4. Use filetrs on the left of the screen to make recomemndations more specific
-5. Edit your profile to update your info and movie interests
-5. Use the search feature to find movies by title or genre
-
-
-
-----------------------------------------------------------------------------------------------
-
+This was a fun project that taught me a lot about data science and web development!
