@@ -1,5 +1,6 @@
 # Movie Recommender System
-This is personalized movie recommendation system that is built using Streamlit. It includes user authentication, profile management menu, and collaborative filtering to suggest movies according to user preferences. It also has filters to make the results more specific
+This is personalized movie recommendation system that is built using Streamlit. It includes user authentication, profile management menu, and collaborative filtering to suggest movies according to user preferences. It also has filters to make the results more specific. I have used collaborative filtering to find users with similar taste in movie, and suggests movies liked by those users. 
+
 
 
 
@@ -15,8 +16,21 @@ This is personalized movie recommendation system that is built using Streamlit. 
 
 
 ----------------------------------------------------------------------------------------------
+## Files in this project
+=: `app.py` - Main application file 
+=: `auth.py` - File to handle user login, signup, password 
+=: `profile_manager.py` - File to manage user profiles and settings
+=: `recommender.py` - File with recommendation algorithm
+=: `data_exploration.ipynb` - File of my data analysis work of 3 weeks
+=: `requirements.txt` - File with required Python packages
+=: `data/` - Folder with Movie dataset files from MovieLens
+=: `static/custom.css` - File that contains styling for the app
+
+
+
+----------------------------------------------------------------------------------------------
 ## Live Demo
-[deployment link to be added]
+[link to be added]
 
 
 
@@ -44,7 +58,7 @@ This is personalized movie recommendation system that is built using Streamlit. 
     - venv\Scripts\activate        // On Windows
 
     - pip install -r requirements.txt       //install from the given file
-    - pip install streamlit pandas numpy scikit-surprise bcrypt     //Or, intall individually
+    - pip install streamlit pandas numpy scikit-surprise bcrypt     //Or, install individually
 
 3. To run the system: streamlit run app.py
 

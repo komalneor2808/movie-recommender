@@ -1,5 +1,4 @@
-/* Simple CSS styling for the movie recommendation app */
-/* I learned CSS basics and applied some styling to make the app look nicer */
+/* CSS styling for the movie recommendation app */
 
 /* Basic font and text settings */
 :root {
@@ -7,7 +6,7 @@
     --font-family: Arial, sans-serif;
 }
 
-/* Make the app use our chosen font and size */
+/* font and size */
 .stApp {
     font-size: var(--text-size) !important;
     font-family: var(--font-family) !important;
@@ -21,7 +20,7 @@
     font-family: var(--font-family) !important;
 }
 
-/* Dark theme styling - changes colors when user picks dark mode */
+/* Dark theme styling */
 .theme-dark {
     background-color: #262730 !important;
     color: #ffffff !important;
@@ -39,7 +38,7 @@
     color: #ffffff !important;
 }
 
-/* Profile button styling - the user icon in top left */
+/* Profile button styling */
 .profile-button {
     background-color: #1f77b4 !important;
     color: white !important;

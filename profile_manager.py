@@ -1,12 +1,11 @@
-# This file manages the user profile dropdown menu
-# It handles showing user info, editing profile, changing password, etc.
+# This file is for user profile menu to handle user info, editing profile, changing password, setting preferences etc
 
 import streamlit as st
 from auth import auth
 
 class ProfileManager:
     def __init__(self):
-        # Set up some variables we need to track the profile menu
+        # Set up some variables to track the profile menu
         if 'show_profile_dropdown' not in st.session_state:
             st.session_state.show_profile_dropdown = False
         if 'profile_tab' not in st.session_state:
@@ -17,8 +16,8 @@ class ProfileManager:
         with st.container():
             col1, col2, col3 = st.columns([1, 8, 1])
             with col1:
-                if st.button("👤", key="profile_toggle", help="Click to see your profile"):
-                    # Toggle the dropdown on/off when clicked
+                if st.button("👤", key="profile_toggle", help="Click to check your profile"):
+                    # Toggle the dropdown on/off with a click
                     st.session_state.show_profile_dropdown = not st.session_state.show_profile_dropdown
                     st.rerun()
     
@@ -27,7 +26,7 @@ class ProfileManager:
         if not st.session_state.show_profile_dropdown:
             return
         
-        # Create tabs for different profile sections
+        # Tabs for different profile sections
         with st.container():
             tab1, tab2, tab3 = st.tabs(["My Info", "Change Password", "Settings"])
             
@@ -45,10 +44,10 @@ class ProfileManager:
     def show_profile_info(self):
         st.subheader("Your Profile")
         
-        # Get current user's information from database
+        # Get current user information from database
         user_info = auth.get_user_info(st.session_state.username)
         if not user_info:
-            st.error("Couldn't load your profile info")
+            st.error("Couldn't load profile info")
             return
         
         # Show current info in two columns
@@ -91,7 +90,7 @@ class ProfileManager:
                 st.session_state.logged_in = False
                 st.session_state.username = ""
                 st.session_state.show_profile_dropdown = False
-                st.success("You've been logged out!")
+                st.success("You logged out!")
                 st.rerun()
         
         with col2:
@@ -101,7 +100,6 @@ class ProfileManager:
     
     def show_password_change(self):
         st.subheader("Change Your Password")
-        st.warning("Don't forget your new password!")
         
         # Form for changing password
         with st.form("change_password"):
@@ -112,9 +110,9 @@ class ProfileManager:
             if st.form_submit_button("Change Password", type="primary"):
                 # Basic validation
                 if not current_pwd:
-                    st.error("Please enter your current password!")
+                    st.error("Enter your current password!")
                 elif len(new_pwd) < 6:
-                    st.error("New password needs to be at least 6 characters!")
+                    st.error("Password should be at least 6 characters long!")
                 elif new_pwd != confirm_pwd:
                     st.error("New passwords don't match!")
                 else:
@@ -124,7 +122,7 @@ class ProfileManager:
                     )
                     if success:
                         st.success(message)
-                        st.balloons()  # Fun celebration!
+                        st.balloons()  # I find this intresting, this is my fav
                     else:
                         st.error(message)
     

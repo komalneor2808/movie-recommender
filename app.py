@@ -1,5 +1,4 @@
 # Main application file for Movie Recommendation System
-# This is where everything comes together - login, recommendations, UI, etc.
 
 import streamlit as st
 import pandas as pd
@@ -16,7 +15,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Initialize session state variables (these keep track of user login status, etc.)
+# Initialize session state variables to track user login status, etc.
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 if 'username' not in st.session_state:
@@ -29,12 +28,12 @@ if 'profile_tab' not in st.session_state:
     st.session_state.profile_tab = "profile"
 
 def load_styling():
-    # Load custom CSS for better appearance
+    # Load CSS styling
     if os.path.exists('static/custom.css'):
         with open('static/custom.css') as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     
-    # Apply dark theme if user selected it
+    # Apply dark theme once selected
     if st.session_state.theme == "dark":
         st.markdown("""
         <style>
@@ -47,9 +46,9 @@ def load_styling():
         """, unsafe_allow_html=True)
 
 def show_login_page():
-    # This function shows the login and signup page
+    # function to show the login and signup page
     st.title("🎬 Movie Recommendation System")
-    st.markdown("Please sign in or create a new account to continue.")
+    st.markdown("Sign in or create a new account to continue.")
     st.markdown("---")
     
     # Center the login form
@@ -87,7 +86,7 @@ def show_login_page():
         with signup_tab:
             st.subheader("Create a new account")
             with st.form("signup_form"):
-                new_username = st.text_input("Choose Username", key="new_user")
+                new_username = st.text_input("Choose a Username", key="new_user")
                 new_email = st.text_input("Email Address", key="new_email")
                 new_password = st.text_input("Password", type="password", key="new_pass")
                 confirm_password = st.text_input("Confirm Password", type="password", key="confirm_pass")
@@ -99,7 +98,7 @@ def show_login_page():
                 signup_button = st.form_submit_button("Create Account", type="primary", use_container_width=True)
                 
                 if signup_button:
-                    # Validate the signup form
+                    # Validate sign up info
                     if not new_username or not new_email or not new_password:
                         st.error("Please fill in all required fields!")
                     elif new_password != confirm_password:
@@ -113,7 +112,7 @@ def show_login_page():
                         success, message = auth.create_user(new_username, new_email, new_password, full_name, age)
                         if success:
                             st.success(message)
-                            st.info("Now you can sign in with your new account!")
+                            st.info("Successfully created your account!")
                         else:
                             st.error(message)
 
@@ -142,29 +141,29 @@ def main_application():
 
     # Main page header
     st.title("🎬 Movie Recommendation System")
-    st.markdown(f"### Hi there, **{st.session_state.username}**!")
+    st.markdown(f"### Hi **{st.session_state.username}**!")
     
-    # Show profile button and dropdown
+    # Show profile menu
     profile_manager.show_profile_button()
     profile_manager.show_profile_menu()
     
     st.markdown("---")
 
-    # Sidebar with filters and options
+    # Sidebar with filters 
     st.sidebar.title("Options")
     
     # Movie search feature
     st.sidebar.subheader("Search Movies")
     movie_search = st.sidebar.text_input("Type movie name:")
     if movie_search:
-        # Search for movies containing the search term
+        # Search for movies 
         search_results = movies[movies['title'].str.contains(movie_search, case=False, na=False)]
         if not search_results.empty:
             st.sidebar.success(f"Found {len(search_results)} movies!")
             with st.expander(f"Movies with '{movie_search}' ({len(search_results)} found)"):
                 st.dataframe(search_results[['movie_id', 'title']], use_container_width=True)
         else:
-            st.sidebar.warning(f"No movies found with '{movie_search}'")
+            st.sidebar.warning(f"No movies found with name'{movie_search}'")
     
     st.sidebar.markdown("---")
     
@@ -196,11 +195,11 @@ def main_application():
         if user_id:
             st.markdown(f"Finding movies for **User {user_id}** (minimum {min_rating} stars)")
         else:
-            st.markdown(f"Finding popular movies (minimum {min_rating} stars)")
+            st.markdown(f"Finding movies (minimum {min_rating} stars)")
         
         # Recommendation button
         if st.button("Find Movies for Me!", type="primary", use_container_width=True):
-            with st.spinner("Looking for great movies..."):
+            with st.spinner("Looking..."):
                 try:
                     if user_id:
                         # Get personalized recommendations
@@ -250,12 +249,12 @@ def main_application():
                                 st.markdown("---")
                         
                     else:
-                        st.warning("Sorry, couldn't find any recommendations with these filters.")
-                        st.info("Try changing the minimum rating or user selection.")
+                        st.warning("Unfortunately, couldn't find any recommendations with these filters.")
+                        st.info("Try changing the filters.")
                 
                 except Exception as e:
-                    st.error(f"Something went wrong: {str(e)}")
-                    st.info("Please try again or change your filters.")
+                    st.error(f"Error: {str(e)}")
+                    st.info("Try again ...")
 
     with right_col:
         st.subheader("Dataset Info")
@@ -285,7 +284,7 @@ def main_application():
         age_distribution = users['age'].value_counts().head(10)
         st.bar_chart(age_distribution)
 
-# Main app logic - decide whether to show login or main app
+# Main app logic 
 if __name__ == "__main__":
     if not st.session_state.logged_in:
         show_login_page()
