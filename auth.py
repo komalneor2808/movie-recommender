@@ -1,5 +1,8 @@
+# This file handles user login, signup, and password 
+# I am using SQLite database to store user information
+
 import sqlite3
-import bcrypt
+import bcrypt  # for password security
 import streamlit as st
 from datetime import datetime
 import os
@@ -7,12 +10,15 @@ import os
 class UserAuth:
     def __init__(self, db_path="users.db"):
         self.db_path = db_path
-        self.init_database()
+        self.setup_database()
     
-    def init_database(self):
+    def setup_database(self):
+
+        # Create the database table if it doesn't exist already
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
+        # This creates the users table with all the required columns 
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,52 +35,63 @@ class UserAuth:
         conn.commit()
         conn.close()
     
-    def hash_password(self, password):
+    def make_password_secure(self, password):
+        # Hash the password so we don't store plain text passwords
         return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     
-    def verify_password(self, password, hashed):
-        return bcrypt.checkpw(password.encode('utf-8'), hashed)
+    def check_password(self, password, stored_hash):
+        # Check if the entered password matches the stored hash
+        return bcrypt.checkpw(password.encode('utf-8'), stored_hash)
     
     def create_user(self, username, email, password, full_name="", age=None):
+        # Add a new user to the database
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
         try:
-            password_hash = self.hash_password(password)
+            # Make password secure before storing
+            secure_password = self.make_password_secure(password)
+            
+            # Insert new user into database
             cursor.execute('''
                 INSERT INTO users (username, email, password_hash, full_name, age)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (username, email, password_hash, full_name, age))
+            ''', (username, email, secure_password, full_name, age))
             
             conn.commit()
             conn.close()
-            return True, "User created successfully!"
+            return True, "Account created successfully!"
         
         except sqlite3.IntegrityError as e:
             conn.close()
+            # Check what went wrong
             if "username" in str(e):
-                return False, "Username already exists!"
+                return False, "This username is already taken!"
             elif "email" in str(e):
-                return False, "Email already exists!"
+                return False, "This email is already registered!"
             else:
-                return False, "User creation failed!"
+                return False, "Something went wrong while creating the account!"
         except Exception as e:
             conn.close()
             return False, f"Error: {str(e)}"
     
     def authenticate_user(self, username, password):
+        # Check if username and password are correct
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
+        # Get the stored password hash for this username
         cursor.execute('SELECT password_hash FROM users WHERE username = ?', (username,))
         result = cursor.fetchone()
         conn.close()
         
-        if result and self.verify_password(password, result[0]):
+        # If user exists and password matches, return True
+        if result and self.check_password(password, result[0]):
             return True
         return False
     
     def get_user_info(self, username):
+        # Get all info about a user
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -87,6 +104,7 @@ class UserAuth:
         conn.close()
         
         if result:
+            # Return user info as a dictionary
             return {
                 'username': result[0],
                 'email': result[1],
@@ -98,10 +116,12 @@ class UserAuth:
         return None
     
     def update_user_info(self, username, email=None, full_name=None, age=None):
+        # Update user profile information
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
         try:
+            # Build the update query acc. to provided fields
             updates = []
             params = []
             
@@ -115,6 +135,7 @@ class UserAuth:
                 updates.append("age = ?")
                 params.append(age)
             
+            # Only update if there is something to update
             if updates:
                 params.append(username)
                 query = f"UPDATE users SET {', '.join(updates)} WHERE username = ?"
@@ -122,35 +143,38 @@ class UserAuth:
                 conn.commit()
             
             conn.close()
-            return True, "Profile updated successfully!"
+            return True, "Profile updated!"
         
         except sqlite3.IntegrityError:
             conn.close()
-            return False, "Email already exists!"
+            return False, "That email is already being used!"
         except Exception as e:
             conn.close()
             return False, f"Error: {str(e)}"
     
     def change_password(self, username, old_password, new_password):
+        # Change user's password after checking if the old password is correct
         if not self.authenticate_user(username, old_password):
-            return False, "Current password is incorrect!"
+            return False, "Your current password is wrong!"
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
         try:
-            new_hash = self.hash_password(new_password)
+            # Hash the new password and update it
+            new_hash = self.make_password_secure(new_password)
             cursor.execute('UPDATE users SET password_hash = ? WHERE username = ?', 
                          (new_hash, username))
             conn.commit()
             conn.close()
-            return True, "Password changed successfully!"
+            return True, "Password changed!"
         
         except Exception as e:
             conn.close()
             return False, f"Error: {str(e)}"
     
     def update_theme_preference(self, username, theme):
+        # Save user's theme preference between light/dark
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -164,4 +188,5 @@ class UserAuth:
             conn.close()
             return False
 
+# Create the auth object that will be used in other files
 auth = UserAuth()

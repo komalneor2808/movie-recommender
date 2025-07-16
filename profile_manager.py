@@ -1,47 +1,57 @@
+# This file manages the user profile dropdown menu
+# It handles showing user info, editing profile, changing password, etc.
+
 import streamlit as st
 from auth import auth
 
 class ProfileManager:
     def __init__(self):
+        # Set up some variables we need to track the profile menu
         if 'show_profile_dropdown' not in st.session_state:
             st.session_state.show_profile_dropdown = False
         if 'profile_tab' not in st.session_state:
             st.session_state.profile_tab = "profile"
     
-    def render_profile_icon(self):
+    def show_profile_button(self):
+        # Show the profile icon button in top left corner
         with st.container():
             col1, col2, col3 = st.columns([1, 8, 1])
             with col1:
-                if st.button("👤", key="profile_toggle", help="Click to open profile menu"):
+                if st.button("👤", key="profile_toggle", help="Click to see your profile"):
+                    # Toggle the dropdown on/off when clicked
                     st.session_state.show_profile_dropdown = not st.session_state.show_profile_dropdown
                     st.rerun()
     
-    def render_profile_dropdown(self):
+    def show_profile_menu(self):
+        # Only show the dropdown if user clicked the profile button
         if not st.session_state.show_profile_dropdown:
             return
         
+        # Create tabs for different profile sections
         with st.container():
-            tab1, tab2, tab3 = st.tabs(["Profile", "Password", "Preferences"])
+            tab1, tab2, tab3 = st.tabs(["My Info", "Change Password", "Settings"])
             
             with tab1:
-                self.render_profile_tab()
+                self.show_profile_info()
             
             with tab2:
-                self.render_password_tab()
+                self.show_password_change()
             
             with tab3:
-                self.render_preferences_tab()
+                self.show_user_settings()
             
             st.markdown("---")
     
-    def render_profile_tab(self):
-        st.subheader("Profile Information")
+    def show_profile_info(self):
+        st.subheader("Your Profile")
         
+        # Get current user's information from database
         user_info = auth.get_user_info(st.session_state.username)
         if not user_info:
-            st.error("Could not load user information")
+            st.error("Couldn't load your profile info")
             return
         
+        # Show current info in two columns
         col1, col2 = st.columns(2)
         
         with col1:
@@ -49,21 +59,22 @@ class ProfileManager:
             st.info(f"**Email:** {user_info.get('email', '')}")
         
         with col2:
-            st.info(f"**Full Name:** {user_info.get('full_name', 'Not set')}")
-            st.info(f"**Age:** {user_info.get('age', 'Not set')}")
+            st.info(f"**Name:** {user_info.get('full_name', 'Not provided')}")
+            st.info(f"**Age:** {user_info.get('age', 'Not provided')}")
         
-        st.info(f"**Member since:** {user_info.get('created_at', '')}")
+        st.info(f"**Joined:** {user_info.get('created_at', '')}")
         
-        st.markdown("#### Edit Profile")
-        with st.form("profile_edit_form"):
+        # Form to edit profile info
+        st.markdown("#### Update Your Info")
+        with st.form("edit_profile"):
             new_email = st.text_input("Email", value=user_info.get('email', ''))
-            new_full_name = st.text_input("Full Name", value=user_info.get('full_name', ''))
+            new_name = st.text_input("Full Name", value=user_info.get('full_name', ''))
             new_age = st.number_input("Age", min_value=13, max_value=120, 
                                     value=user_info.get('age') if user_info.get('age') else 25)
             
-            if st.form_submit_button("Update Profile", type="primary"):
+            if st.form_submit_button("Save Changes", type="primary"):
                 success, message = auth.update_user_info(
-                    st.session_state.username, new_email, new_full_name, new_age
+                    st.session_state.username, new_email, new_name, new_age
                 )
                 if success:
                     st.success(message)
@@ -71,71 +82,73 @@ class ProfileManager:
                 else:
                     st.error(message)
         
+        # Logout and close buttons
         st.markdown("---")
-        st.markdown("#### Actions")
-        
         col1, col2 = st.columns(2)
         
         with col1:
-            if st.button("Logout", key="profile_logout", help="Logout from your account"):
+            if st.button("Logout", key="logout_btn"):
                 st.session_state.logged_in = False
                 st.session_state.username = ""
                 st.session_state.show_profile_dropdown = False
-                st.success("Logged out successfully!")
+                st.success("You've been logged out!")
                 st.rerun()
         
         with col2:
-            if st.button("Close", key="profile_close", help="Close profile menu"):
+            if st.button("Close Menu", key="close_menu"):
                 st.session_state.show_profile_dropdown = False
                 st.rerun()
     
-    def render_password_tab(self):
-        st.subheader("Change Password")
-        st.warning("Make sure to remember your new password!")
+    def show_password_change(self):
+        st.subheader("Change Your Password")
+        st.warning("Don't forget your new password!")
         
-        with st.form("password_change_form"):
-            old_password = st.text_input("Current Password", type="password", 
-                                       help="Enter your current password to verify your identity")
-            new_password = st.text_input("New Password", type="password",
-                                       help="Password must be at least 6 characters long")
-            confirm_new_password = st.text_input("Confirm New Password", type="password")
+        # Form for changing password
+        with st.form("change_password"):
+            current_pwd = st.text_input("Current Password", type="password")
+            new_pwd = st.text_input("New Password", type="password")
+            confirm_pwd = st.text_input("Confirm New Password", type="password")
             
             if st.form_submit_button("Change Password", type="primary"):
-                if not old_password:
+                # Basic validation
+                if not current_pwd:
                     st.error("Please enter your current password!")
-                elif len(new_password) < 6:
-                    st.error("New password must be at least 6 characters long!")
-                elif new_password != confirm_new_password:
+                elif len(new_pwd) < 6:
+                    st.error("New password needs to be at least 6 characters!")
+                elif new_pwd != confirm_pwd:
                     st.error("New passwords don't match!")
                 else:
+                    # Try to change the password
                     success, message = auth.change_password(
-                        st.session_state.username, old_password, new_password
+                        st.session_state.username, current_pwd, new_pwd
                     )
                     if success:
                         st.success(message)
-                        st.balloons()
+                        st.balloons()  # Fun celebration!
                     else:
                         st.error(message)
     
-    def render_preferences_tab(self):
-        st.subheader("Preferences")
+    def show_user_settings(self):
+        st.subheader("App Settings")
         
+        # Get current theme preference
         user_info = auth.get_user_info(st.session_state.username)
         current_theme = user_info.get('theme_preference', 'light') if user_info else 'light'
         
-        theme_option = st.selectbox(
-            "Choose your preferred theme:",
+        # Theme selector
+        theme_choice = st.selectbox(
+            "Pick your theme:",
             options=["light", "dark"],
-            index=0 if current_theme == "light" else 1,
-            help="Select between light and dark theme for the application"
+            index=0 if current_theme == "light" else 1
         )
         
-        if st.button("Save Preferences", type="primary"):
-            if auth.update_theme_preference(st.session_state.username, theme_option):
-                st.session_state.theme = theme_option
-                st.success("Preferences saved successfully!")
+        if st.button("Save Settings", type="primary"):
+            if auth.update_theme_preference(st.session_state.username, theme_choice):
+                st.session_state.theme = theme_choice
+                st.success("Settings saved!")
                 st.rerun()
             else:
-                st.error("Failed to save preferences. Please try again.")
+                st.error("Couldn't save settings, try again")
 
+# Create the profile manager object
 profile_manager = ProfileManager()

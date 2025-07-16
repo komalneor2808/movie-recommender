@@ -1,28 +1,19 @@
+/* Simple CSS styling for the movie recommendation app */
+/* I learned CSS basics and applied some styling to make the app look nicer */
+
+/* Basic font and text settings */
 :root {
     --text-size: 16px;
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-family: Arial, sans-serif;
 }
 
-[data-text-size="small"] { --text-size: 14px; }
-[data-text-size="medium"] { --text-size: 16px; }
-[data-text-size="large"] { --text-size: 18px; }
-[data-text-size="extra-large"] { --text-size: 20px; }
-
-[data-font-family="sans-serif"] {
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-[data-font-family="serif"] {
-    --font-family: Georgia, Times, "Times New Roman", serif;
-}
-[data-font-family="monospace"] {
-    --font-family: "Courier New", Courier, monospace;
-}
-
+/* Make the app use our chosen font and size */
 .stApp {
     font-size: var(--text-size) !important;
     font-family: var(--font-family) !important;
 }
 
+/* Apply consistent styling to all text elements */
 .stMarkdown, .stText, .stTextInput, .stTextArea,
 .stSelectbox, .stMultiselect, .stSlider, .stButton,
 .stRadio, .stCheckbox, .stDataFrame {
@@ -30,14 +21,17 @@
     font-family: var(--font-family) !important;
 }
 
+/* Dark theme styling - changes colors when user picks dark mode */
 .theme-dark {
     background-color: #262730 !important;
     color: #ffffff !important;
 }
+
 .theme-dark .stButton button {
     background-color: #404040 !important;
     color: #ffffff !important;
 }
+
 .theme-dark .stTextInput input,
 .theme-dark .stSelectbox select,
 .theme-dark .stTextArea textarea {
@@ -45,21 +39,16 @@
     color: #ffffff !important;
 }
 
+/* Profile button styling - the user icon in top left */
 .profile-button {
-    background-color: var(--profile-color, #1f77b4) !important;
+    background-color: #1f77b4 !important;
     color: white !important;
     border-radius: 20px !important;
     padding: 0.5rem 1rem !important;
     border: none !important;
 }
 
-.accent-color {
-    color: var(--accent-color, #ff4b4b) !important;
-}
-.accent-bg {
-    background-color: var(--accent-color, #ff4b4b) !important;
-}
-
+/* Profile dropdown menu styling */
 .profile-dropdown {
     position: fixed;
     top: 60px;
@@ -73,12 +62,14 @@
     padding: 1rem;
 }
 
+/* Dark version of profile dropdown */
 .profile-dropdown.dark {
     background: #262730;
     border-color: #404040;
     color: white;
 }
 
+/* The profile icon button */
 .profile-icon {
     position: fixed;
     top: 20px;
@@ -97,6 +88,7 @@
     font-weight: bold;
 }
 
+/* Tab styling for profile menu */
 .profile-tabs {
     display: flex;
     margin-bottom: 1rem;
@@ -119,48 +111,17 @@
     background: #f5f5f5;
 }
 
-.profile-tab.dark:hover {
-    background: #404040;
-}
-
-.small-button {
-    padding: 0.25rem 0.75rem !important;
-    font-size: 0.8rem !important;
-    min-height: 2rem !important;
-}
-
-.stButton > button[key="profile_logout"],
-.stButton > button[key="profile_close"] {
+/* Button styling for logout and close buttons */
+.stButton > button[key="logout_btn"],
+.stButton > button[key="close_menu"] {
     background-color: #ff8c00 !important;
     color: white !important;
     border-color: #ff8c00 !important;
     border-radius: 0.375rem !important;
 }
 
-.stButton > button[key="profile_logout"]:hover,
-.stButton > button[key="profile_close"]:hover {
+.stButton > button[key="logout_btn"]:hover,
+.stButton > button[key="close_menu"]:hover {
     background-color: #ff7700 !important;
     border-color: #ff7700 !important;
-}
-
-div[data-testid="column"] .stButton > button {
-    background-color: #ff8c00 !important;
-    color: white !important;
-    border-color: #ff8c00 !important;
-}
-
-div[data-testid="column"] .stButton > button:hover {
-    background-color: #ff7700 !important;
-    border-color: #ff7700 !important;
-}
-
-button[data-testid="baseButton-secondary"] {
-    background-color: #dc3545 !important;
-    color: white !important;
-    border-color: #dc3545 !important;
-}
-
-button[data-testid="baseButton-secondary"]:hover {
-    background-color: #c82333 !important;
-    border-color: #bd2130 !important;
 }
